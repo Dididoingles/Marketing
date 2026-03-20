@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page - Ciência e Educação</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS RESET para garantir consistência */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: #000; /* Fundo preto padrão */
+            overflow: hidden; /* Impede barras de rolagem durante a animação */
+        }
+
+        /* --- CONTAINER DO BACKGROUND --- */
+        .hero-container {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Ocupa a altura total da tela */
+            display: flex;
+            align-items: center; /* Centraliza verticalmente */
+            justify-content: center; /* Centraliza horizontalmente inicialmente */
+            
+            /* Background Img com Blur */
+            background-image: url('https://images2.imgbox.com/15/a0/VGx3WUbc_o.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Aplicando o Blur conforme solicitado */
+            filter: blur(8px);
+            -webkit-filter: blur(8px); /* Compatibilidade Safari */
+            
+            /* Overlay escuro para aumentar contraste (opcional, mas recomendado) */
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; width: 100%; height: 100%;
+                background-color: rgba(0, 0, 0, 0.5); /* Escurece 50% */
+                z-index: 1;
+            }
+        }
+
+        /* --- CONTEÚDO QUE NÃO SOFRE BLUR --- */
+        .content-wrapper {
+            position: absolute; /* Fixa o conteúdo sobre o blur */
+            z-index: 2; /* Garante que fique acima do overlay escuro */
+            display: flex;
+            align-items: center;
+            gap: 40px; /* Espaço entre a foto e o texto */
+            
+            /* ANIMAÇÃO 1: Movimento para a esquerda */
+            /* Começa centralizado, move para a esquerda aos 3s e dura 1s */
+            animation: moveContentLeft 1s ease-in-out 3s forwards;
+            
+            /* Define a posição inicial centralizada */
+            transform: translateX(0); 
+        }
+
+        /* --- FOTO REDONDA PULSANTE --- */
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%; /* Torna redonda */
+            border: 5px solid #fff; /* Borda branca grossa */
+            object-fit: cover; /* Garante que a imagem preencha o círculo */
+            
+            /* Sombra inicial (Warm White Glow) */
+            box-shadow: 0 0 20px rgba(255, 244, 224, 0.7);
+            
+            /* ANIMAÇÃO 2: Pulsar suavemente */
+            /* Começa imediatamente, dura 2s, infinita */
+            animation: pulseGlow 2s infinite ease-in-out;
+            
+            transition: box-shadow 0.5s ease; /* Suaviza a mudança final do brilho */
+        }
+
+        /* --- TEXTO TYPEWRITER --- */
+        .typewriter-text {
+            color: #fff;
+            font-size: 2.2rem;
+            font-weight: 600; /* Semi-bold */
+            line-height: 1; /* Conforme solicitado */
+            letter-spacing: 0; /* Conforme solicitado */
+            
+            /* Configuração inicial para Typewriter */
+            overflow: hidden; /* Esconde o texto */
+            white-space: nowrap; /* Impede quebra de linha */
+            width: 0; /* Começa com largura zero */
+            
+            /* Cursor piscante inicial */
+            border-right: .15em solid rgba(255, 244, 224, 0.8);
+            
+            /* ANIMAÇÃO 3: Digitação e Cursor */
+            /* typing: começa aos 4s (após movimento), dura 3.5s */
+            /* blink-caret: começa aos 4s, infinita */
+            animation: 
+                typing 3.5s steps(50, end) 4s forwards,
+                blink-caret .75s step-end 4s infinite;
+        }
+
+        /* --- ESTADO FINAL: Ambos Brilham (Shadow) --- */
+        /* Esta classe é adicionada via animação timing */
+        .content-wrapper.final-glow .profile-pic,
+        .content-wrapper.final-glow .typewriter-text {
+            box-shadow: 0 10px 30px rgba(255, 244, 224, 0.8);
+            border-color: rgba(255, 244, 224, 0.5); /* Suaviza a borda da foto */
+        }
+
+        /* =========================================
+           DEFINIÇÃO DAS ANIMAÇÕES (KEYFRAMES)
+           ========================================= */
+
+        /* 1. Pulsar suavemente a sombra da foto */
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 244, 224, 0.6); }
+            50% { box-shadow: 0 0 30px rgba(255, 244, 224, 1); }
+            100% { box-shadow: 0 0 15px rgba(255, 244, 224, 0.6); }
+        }
+
+        /* 2. Mover o container para a esquerda */
+        @keyframes moveContentLeft {
+            from { transform: translateX(0); }
+            /* Ajuste o translateX conforme necessário para centralizar a composição final */
+            to { transform: translateX(-15%); } 
+        }
+
+        /* 3. Efeito Typewriter (revelar largura) */
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; } /* Revela o texto inteiro */
+        }
+
+        /* 4. Cursor piscante */
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: rgba(255, 244, 224, 0.8); }
+        }
+
+        /* 5. Acionar o Brilho Final (aplicado ao container via timing) */
+        @keyframes triggerFinalGlow {
+            to { 
+                /* Remove animações infinitas para ficarem estáticos */
+                animation-play-state: paused; 
+            }
+        }
+        
+        /* Aplicando o trigger final ao wrapper após a digitação (4s + 3.5s = 7.5s) */
+        .content-wrapper {
+            animation: 
+                moveContentLeft 1s ease-in-out 3s forwards,
+                triggerFinalGlow 0.1s linear 7.6s forwards; /* Ativa logo após digitar */
+        }
+        
+        /* Quando triggerFinalGlow termina, aplica o estilo final */
+        .content-wrapper[style*="animation-play-state: paused"] .profile-pic,
+        .content-wrapper[style*="animation-play-state: paused"] .typewriter-text {
+             box-shadow: 0 10px 40px rgba(255, 244, 224, 1) !important;
+             animation: none !important; /* Para as pulsações */
+             border-right: none !important; /* Remove o cursor */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="hero-container"></div>
+
+    <div class="content-wrapper">
+        
+        <img src="https://images2.imgbox.com/31/9a/S7Gg4KSl_o.jpg" alt="Foto de Perfil" class="profile-pic">
+        
+        <p class="typewriter-text">Onde o amor pela ciência e a educação se encontram.</p>
+
+    </div>
+
+</body>
+</html>
