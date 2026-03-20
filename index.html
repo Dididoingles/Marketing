@@ -1,134 +1,22 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dididoidoingles - Intro</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Education of the Future Animation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body, html {
-            height: 100%;
-            font-family: 'Poppins', sans-serif;
-            background-color: #000;
-            overflow: hidden;
-        }
-
-        .hero-background {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background-image: url('https://images2.imgbox.com/15/a0/VGx3WUbc_o.jpg');
-            background-size: cover;
-            background-position: center;
-            filter: blur(10px);
-        }
-
-        .main-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            width: 100%;
-            position: relative;
-        }
-
-        /* --- FOTO (Recorte e sua animação do Gradienty) --- */
-        .profile-pic {
-            width: 180px;
-            height: 180px;
-            object-fit: cover;
-            clip-path: circle(50% at 50% 50%);
-            -webkit-clip-path: circle(50% at 50% 50%);
-            z-index: 2;
-            
-            /* Começa a mover após 1 segundo apenas (mais rápido) */
-            animation: slide-left-normal 1s ease 1s forwards,
-                       unifiedGlow 1s ease-in-out 5s forwards;
-        }
-
-        /* --- CONTAINER DO TEXTO --- */
-        .text-container {
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            z-index: 1;
-            /* Move junto com a foto para manter a proximidade */
-            transform: translateX(0);
-            animation: moveTextContainer 1s ease 1s forwards;
-        }
-
-        .typewriter-text {
-            color: #fff;
-            font-size: 1.15rem;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0; /* Começa escondido e "nasce" via typewriter */
-            border-right: 3px solid rgba(255, 244, 224, 1);
-            
-            /* Começa a digitar assim que a foto termina de mover (2s) */
-            animation: typing 2.5s steps(50, end) 2s forwards,
-                       blink-caret .75s step-end infinite,
-                       unifiedGlow 1s ease-in-out 5s forwards;
-        }
-
-        /* --- KEYFRAMES --- */
-
-        /* Sua animação original */
-        @keyframes slide-left-normal {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-120px); }
-        }
-
-        /* Move o texto junto para ele não ficar "longe" */
-        @keyframes moveTextContainer {
-            0% { transform: translateX(0); padding-left: 0; }
-            100% { transform: translateX(-110px); padding-left: 20px; }
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: rgba(255, 244, 224, 1); }
-        }
-
-        /* O Brilho final unificado */
-        @keyframes unifiedGlow {
-            0% { box-shadow: 0 0 0px transparent; filter: brightness(1); }
-            50% { box-shadow: 0 0 30px rgba(255, 244, 224, 1); filter: brightness(1.3); }
-            100% { box-shadow: 0 0 15px rgba(255, 244, 224, 0.6); filter: brightness(1.1); }
-        }
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="hero-background"></div>
-
-    <main class="main-content">
-        <img src="https://images2.imgbox.com/31/9a/S7Gg4KSl_o.jpg" alt="Foto Diandra" class="profile-pic">
+    <div class="main-container">
+        <h1 class="typewriter" id="typewriter-text"></h1>
         
-        <div class="text-container">
-            <p class="typewriter-text">Onde o amor pela ciência e a educação se encontram.</p>
+        <div class="image-wrapper slide-left-normal">
+            <img src="https://images2.imgbox.com/31/9a/S7Gg4KSl_o.jpg" alt="Education Future">
         </div>
-    </main>
+    </div>
 
-    <script>
-        // Limpeza final: remove o cursor após a animação
-        setTimeout(() => {
-            const cursor = document.querySelector('.typewriter-text');
-            if (cursor) cursor.style.borderRight = 'none';
-        }, 5500);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
