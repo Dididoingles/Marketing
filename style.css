@@ -1,0 +1,67 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Stylish Black */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+.main-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* The Circular Image Frame */
+.image-wrapper {
+    width: 250px; /* Adjust size to fit your image better */
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 2;
+    position: absolute;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Your Requested Animation */
+@keyframes slide-left-normal {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-200px); } /* Adjusted to reveal text better */
+}
+
+.slide-left-normal { 
+    animation: slide-left-normal 2s ease 0s 1 normal forwards; 
+}
+
+/* Typewriter Text Styling */
+.typewriter {
+    color: white;
+    font-size: 2rem;
+    position: absolute;
+    left: calc(50% - 100px); /* Positioned where the image starts */
+    white-space: nowrap;
+    z-index: 1;
+}
+
+/* The Cursor */
+.typewriter::after {
+    content: "|";
+    margin-left: 5px;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
