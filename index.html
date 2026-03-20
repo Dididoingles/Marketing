@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page - Ciência e Educação</title>
+    <title>Dididoidoingles - Intro</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
             height: 100%;
@@ -23,95 +19,77 @@
             overflow: hidden;
         }
 
-        /* --- 1. BACKGROUND COM BLUR --- */
         .hero-background {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             background-image: url('https://images2.imgbox.com/15/a0/VGx3WUbc_o.jpg');
             background-size: cover;
             background-position: center;
             filter: blur(10px);
-            -webkit-filter: blur(10px);
         }
 
-        /* --- 2. CONTEÚDO PRINCIPAL --- */
         .main-content {
-            position: relative;
-            z-index: 10;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             width: 100%;
-            /* Move para a esquerda aos 3s */
-            animation: moveEverythingLeft 1s ease-in-out 3s forwards;
+            position: relative;
         }
 
-        /* --- 3. FOTO (SEM BORDA PRETA) --- */
+        /* --- FOTO (Recorte e sua animação do Gradienty) --- */
         .profile-pic {
             width: 180px;
             height: 180px;
-            border-radius: 50%;
             object-fit: cover;
-            outline: 5px solid #fff; /* Borda branca nítida */
+            clip-path: circle(50% at 50% 50%);
+            -webkit-clip-path: circle(50% at 50% 50%);
+            z-index: 2;
             
-            /* Sombra interna (inset) para eliminar o aro preto da imagem original */
-            box-shadow: 
-                inset 0 0 15px rgba(255, 244, 224, 0.6), 
-                0 0 20px rgba(255, 244, 224, 0.5);
-            
-            /* Animação de pulsar o brilho */
-            animation: pulseGlow 2s infinite ease-in-out;
-            transition: box-shadow 0.5s ease;
+            /* Começa a mover após 1 segundo apenas (mais rápido) */
+            animation: slide-left-normal 1s ease 1s forwards,
+                       unifiedGlow 1s ease-in-out 5s forwards;
         }
 
-        /* --- 4. CONTAINER DO TEXTO --- */
+        /* --- CONTAINER DO TEXTO --- */
         .text-container {
+            overflow: hidden;
             display: flex;
             align-items: center;
-            overflow: hidden;
-            padding-left: 0;
-            animation: expandSpace 1s ease-in-out 3s forwards;
+            z-index: 1;
+            /* Move junto com a foto para manter a proximidade */
+            transform: translateX(0);
+            animation: moveTextContainer 1s ease 1s forwards;
         }
 
-        /* --- 5. TEXTO TYPEWRITER (50% MENOR + CURSOR COLADO) --- */
         .typewriter-text {
             color: #fff;
-            font-size: 1.15rem; /* Reduzido em 50% conforme pedido */
+            font-size: 1.15rem;
             font-weight: 600;
-            line-height: 1;
-            letter-spacing: 0;
             white-space: nowrap;
             overflow: hidden;
-            width: 0;
-            /* Cursor branco quente */
+            width: 0; /* Começa escondido e "nasce" via typewriter */
             border-right: 3px solid rgba(255, 244, 224, 1);
             
-            /* Sincronização: 52 caracteres aproximados na frase */
-            animation: 
-                typing 3s steps(52, end) 4s forwards,
-                blink-caret .75s step-end infinite;
+            /* Começa a digitar assim que a foto termina de mover (2s) */
+            animation: typing 2.5s steps(50, end) 2s forwards,
+                       blink-caret .75s step-end infinite,
+                       unifiedGlow 1s ease-in-out 5s forwards;
         }
 
         /* --- KEYFRAMES --- */
 
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: inset 0 0 15px rgba(255, 244, 224, 0.5), 0 0 20px rgba(255, 244, 224, 0.5); }
-            50% { box-shadow: inset 0 0 25px rgba(255, 244, 224, 0.8), 0 0 40px rgba(255, 244, 224, 1); }
+        /* Sua animação original */
+        @keyframes slide-left-normal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-120px); }
         }
 
-        @keyframes moveEverythingLeft {
-            from { justify-content: center; }
-            to { justify-content: flex-start; padding-left: 15%; }
-        }
-
-        @keyframes expandSpace {
-            from { padding-left: 0; }
-            to { padding-left: 30px; }
+        /* Move o texto junto para ele não ficar "longe" */
+        @keyframes moveTextContainer {
+            0% { transform: translateX(0); padding-left: 0; }
+            100% { transform: translateX(-110px); padding-left: 20px; }
         }
 
         @keyframes typing {
@@ -124,24 +102,11 @@
             50% { border-color: rgba(255, 244, 224, 1); }
         }
 
-        /* --- ESTADO FINAL (ESTÁTICO COM BRILHO) --- */
-        .main-content {
-            /* Após 7s (3s espera + 1s move + 3s digita), pausamos e brilhamos */
-            animation: 
-                moveEverythingLeft 1s ease-in-out 3s forwards,
-                stopAnimations 0.1s linear 7s forwards;
-        }
-
-        @keyframes stopAnimations {
-            to { animation-play-state: paused; }
-        }
-
-        /* Aplica o brilho final quando a animação pausa */
-        .main-content[style*="paused"] .profile-pic,
-        .main-content[style*="paused"] .typewriter-text {
-            box-shadow: 0 10px 40px rgba(255, 244, 224, 1) !important;
-            animation: none !important;
-            border-right: none !important; /* Remove o cursor no final */
+        /* O Brilho final unificado */
+        @keyframes unifiedGlow {
+            0% { box-shadow: 0 0 0px transparent; filter: brightness(1); }
+            50% { box-shadow: 0 0 30px rgba(255, 244, 224, 1); filter: brightness(1.3); }
+            100% { box-shadow: 0 0 15px rgba(255, 244, 224, 0.6); filter: brightness(1.1); }
         }
 
     </style>
@@ -159,10 +124,11 @@
     </main>
 
     <script>
-        // Pequeno script para forçar o estado final após as animações
+        // Limpeza final: remove o cursor após a animação
         setTimeout(() => {
-            document.querySelector('.main-content').style.animationPlayState = 'paused';
-        }, 7100);
+            const cursor = document.querySelector('.typewriter-text');
+            if (cursor) cursor.style.borderRight = 'none';
+        }, 5500);
     </script>
 </body>
 </html>
