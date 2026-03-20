@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introdução - Ciência e Educação (Corrigido)</title>
+    <title>Landing Page - Ciência e Educação</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
             overflow: hidden;
         }
 
-        /* --- 1. BACKGROUND (ISOLADO COM BLUR) --- */
+        /* --- 1. BACKGROUND COM BLUR --- */
         .hero-background {
             position: fixed;
             top: 0;
@@ -31,11 +31,9 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            
             background-image: url('https://images2.imgbox.com/15/a0/VGx3WUbc_o.jpg');
             background-size: cover;
             background-position: center;
-            
             filter: blur(10px);
             -webkit-filter: blur(10px);
         }
@@ -46,142 +44,104 @@
             z-index: 10;
             display: flex;
             align-items: center;
-            justify-content: center; /* Centralizado inicialmente */
+            justify-content: center;
             height: 100vh;
             width: 100%;
-            
-            /* ANIMAÇÃO 1: Mover para a esquerda aos 3s, dura 1s */
+            /* Move para a esquerda aos 3s */
             animation: moveEverythingLeft 1s ease-in-out 3s forwards;
         }
 
-        /* --- 3. FOTO REDONDA (CORREÇÃO DE BORDAS E BRILHO) --- */
+        /* --- 3. FOTO (SEM BORDA PRETA) --- */
         .profile-pic {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            object-fit: cover; /* Imagem preenche o círculo */
-            position: relative;
-            left: 0; 
+            object-fit: cover;
+            outline: 5px solid #fff; /* Borda branca nítida */
             
-            /* CORREÇÃO AQUI: Removemos o border anterior */
-            /* border: 6px solid #fff; */
-            
-            /* CORREÇÃO AQUI: Usamos outline e box-shadow para o brilho perfeito */
-            outline: 6px solid #fff; /* Borda branca nítida */
+            /* Sombra interna (inset) para eliminar o aro preto da imagem original */
             box-shadow: 
-                0 0 0 6px rgba(255, 244, 224, 0.4), /* Brilho quente suave na borda */
-                0 10px 30px rgba(255, 244, 224, 0.8); /* Brilho quente principal embaixo */
+                inset 0 0 15px rgba(255, 244, 224, 0.6), 
+                0 0 20px rgba(255, 244, 224, 0.5);
             
-            /* ANIMAÇÃO 2: Pulsar suavemente a sombra */
-            /* Começa imediatamente, dura 2s, infinita */
+            /* Animação de pulsar o brilho */
             animation: pulseGlow 2s infinite ease-in-out;
-            
-            transition: box-shadow 0.5s ease; 
+            transition: box-shadow 0.5s ease;
         }
 
         /* --- 4. CONTAINER DO TEXTO --- */
         .text-container {
             display: flex;
             align-items: center;
-            height: 200px; /* Alinhamento vertical perfeito com a foto */
-            overflow: hidden; /* Texto escondido */
-            padding-left: 0; 
-            
-            /* ANIMAÇÃO 3: Criar espaço para o texto aos 3s, dura 1s */
-            animation: expandSpaceForText 1s ease-in-out 3s forwards;
+            overflow: hidden;
+            padding-left: 0;
+            animation: expandSpace 1s ease-in-out 3s forwards;
         }
 
-        /* --- 5. TEXTO TYPEWRITER (CORREÇÃO DE SINCRONIA) --- */
+        /* --- 5. TEXTO TYPEWRITER (50% MENOR + CURSOR COLADO) --- */
         .typewriter-text {
             color: #fff;
-            font-size: 2.3rem; /* Tamanho do lema */
-            font-weight: 600; /* Semi-bold */
-            line-height: 1; /* Conforme guideline */
-            letter-spacing: 0; /* Conforme guideline */
+            font-size: 1.15rem; /* Reduzido em 50% conforme pedido */
+            font-weight: 600;
+            line-height: 1;
+            letter-spacing: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            /* Cursor branco quente */
+            border-right: 3px solid rgba(255, 244, 224, 1);
             
-            white-space: nowrap; /* Impede quebra de linha */
-            width: 0; /* Começa com largura zero */
-            overflow: hidden; /* Esconde caracteres extras */
-            
-            /* Cursor piscante (Warm White) */
-            border-right: .15em solid rgba(255, 244, 224, 0.9);
-            
-            /* CORREÇÃO AQUI: Animação sincronizada com Poppins */
-            /* typing: começa aos 4s, dura 2.5s (mais rápido) */
+            /* Sincronização: 52 caracteres aproximados na frase */
             animation: 
-                typing 2.5s steps(45, end) 4s forwards,
-                blink-caret .75s step-end 4s infinite;
+                typing 3s steps(52, end) 4s forwards,
+                blink-caret .75s step-end infinite;
         }
 
-        /* --- 6. ESTADO FINAL ESTÁTICO --- */
-        /* Esta classe é ativada via animação timing */
-        .main-content.final-static-glow .profile-pic,
-        .main-content.final-static-glow .typewriter-text {
-            box-shadow: 0 15px 50px rgba(255, 244, 224, 1) !important;
-            border-color: rgba(255, 244, 224, 0.7); 
-        }
+        /* --- KEYFRAMES --- */
 
-        /* =========================================
-           ANIMAÇÕES (KEYFRAMES)
-           ========================================= */
-
-        /* A. Pulsar suavemente a sombra da foto */
         @keyframes pulseGlow {
-            0% { box-shadow: 0 0 20px rgba(255, 244, 224, 0.7); }
-            50% { box-shadow: 0 0 40px rgba(255, 244, 224, 1); }
-            100% { box-shadow: 0 0 20px rgba(255, 244, 224, 0.7); }
+            0%, 100% { box-shadow: inset 0 0 15px rgba(255, 244, 224, 0.5), 0 0 20px rgba(255, 244, 224, 0.5); }
+            50% { box-shadow: inset 0 0 25px rgba(255, 244, 224, 0.8), 0 0 40px rgba(255, 244, 224, 1); }
         }
 
-        /* B. Mover para a esquerda (centralizado final) */
         @keyframes moveEverythingLeft {
             from { justify-content: center; }
-            to { justify-content: flex-start; padding-left: 10%; } 
+            to { justify-content: flex-start; padding-left: 15%; }
         }
 
-        /* C. Criar espaço para o texto */
-        @keyframes expandSpaceForText {
+        @keyframes expandSpace {
             from { padding-left: 0; }
-            to { padding-left: 40px; } /* Espaço final */
+            to { padding-left: 30px; }
         }
 
-        /* D. Efeito Typewriter (revelar largura de forma sincronizada) */
         @keyframes typing {
             from { width: 0; }
-            /* CORREÇÃO AQUI: Usando max-width para melhor renderização */
-            to { width: 100%; max-width: 100%; } 
+            to { width: 100%; }
         }
 
-        /* E. Cursor piscante */
         @keyframes blink-caret {
             from, to { border-color: transparent; }
-            50% { border-color: rgba(255, 244, 224, 0.9); }
+            50% { border-color: rgba(255, 244, 224, 1); }
         }
 
-        /* F. Acionar o Estado Final Estático (timing) */
-        @keyframes triggerFinalState {
-            to { 
-                /* Pausa animações infinitas */
-                animation-play-state: paused; 
-            }
-        }
-        
-        /* Aplicando o trigger final após tudo (4s + 2.5s = 6.5s) */
+        /* --- ESTADO FINAL (ESTÁTICO COM BRILHO) --- */
         .main-content {
+            /* Após 7s (3s espera + 1s move + 3s digita), pausamos e brilhamos */
             animation: 
                 moveEverythingLeft 1s ease-in-out 3s forwards,
-                triggerFinalState 0.1s linear 6.6s forwards; /* Ativa logo após digitar */
+                stopAnimations 0.1s linear 7s forwards;
         }
-        
-        /* Quando triggerFinalState termina, aplica o estilo estático */
-        .main-content[style*="animation-play-state: paused"] .profile-pic {
-             box-shadow: 0 15px 50px rgba(255, 244, 224, 1) !important;
-             animation: none !important; /* Para pulsações */
+
+        @keyframes stopAnimations {
+            to { animation-play-state: paused; }
         }
-        
-        .main-content[style*="animation-play-state: paused"] .typewriter-text {
-             box-shadow: 0 10px 30px rgba(255, 244, 224, 0.8);
-             animation: none !important; /* Para digitação */
-             border-right: none !important; /* Remove o cursor */
+
+        /* Aplica o brilho final quando a animação pausa */
+        .main-content[style*="paused"] .profile-pic,
+        .main-content[style*="paused"] .typewriter-text {
+            box-shadow: 0 10px 40px rgba(255, 244, 224, 1) !important;
+            animation: none !important;
+            border-right: none !important; /* Remove o cursor no final */
         }
 
     </style>
@@ -191,14 +151,18 @@
     <div class="hero-background"></div>
 
     <main class="main-content">
-        
-        <img src="https://images2.imgbox.com/31/9a/S7Gg4KSl_o.jpg" alt="Foto" class="profile-pic">
+        <img src="https://images2.imgbox.com/31/9a/S7Gg4KSl_o.jpg" alt="Foto Diandra" class="profile-pic">
         
         <div class="text-container">
             <p class="typewriter-text">Onde o amor pela ciência e a educação se encontram.</p>
         </div>
-
     </main>
 
+    <script>
+        // Pequeno script para forçar o estado final após as animações
+        setTimeout(() => {
+            document.querySelector('.main-content').style.animationPlayState = 'paused';
+        }, 7100);
+    </script>
 </body>
 </html>
