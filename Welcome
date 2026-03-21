@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diandra - English Mentor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    <style>
+        :root {
+            --netflix-red: #E50914;
+            --bg-deep: #080808;
+            --sky-dark: #000c1f;
+            --text-gray: #b3b3b3;
+            --soft-white: #F5F5F5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            /* Gradiente longo para garantir que haja rolagem no Google Sites */
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-deep) 40%, var(--sky-dark) 70%, #000000 100%);
+            color: var(--soft-white);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            min-height: 150vh; /* Força a rolagem para testar o efeito */
+        }
+
+        /* --- SEÇÃO HERO --- */
+        .hero-section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .animation-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            min-height: 250px;
+        }
+
+        .circle-frame {
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 2;
+            animation: slide-left-normal 2s ease 0.5s 1 normal forwards;
+            flex-shrink: 0;
+        }
+
+        .circle-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        @keyframes slide-left-normal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-180px); }
+        }
+
+        .text-reveal {
+            position: absolute;
+            left: 40%; 
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            font-weight: 600;
+            white-space: nowrap;
+            z-index: 1;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sub-name {
+            font-size: 0.6em;
+            color: var(--text-gray);
+            font-weight: 300;
+            opacity: 0;
+            margin-top: 5px;
+            animation: fadeInName 1.5s ease 0.8s forwards;
+        }
+
+        @keyframes fadeInName { to { opacity: 1; } }
+
+        .cursor { 
+            display: inline-block; width: 8px; height: 1.2em; background: white; 
+            margin-left: 5px; vertical-align: middle; animation: blink 0.8s infinite; 
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* --- SEÇÃO FOGUETE (REVELAÇÃO AO ROLAR) --- */
+        .rocket-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 120px;
+            position: relative;
+            z-index: 10;
+            margin-top: 100px;
+            
+            /* Estado Inicial (Invisível) */
+            opacity: 0;
+            transform: translateY(50px); /* Começa um pouco abaixo */
+            transition: all 1s ease-out; /* Transição suave de 1 segundo */
+        }
+
+        /* Classe ativada pelo JavaScript quando a seção entra na tela */
+        .rocket-section.reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rocket-animation { 
+            width: 250px; 
+            height: 250px;
+            pointer-events: none;
+        }
+
+        /* Nova instrução solicitada */
+        .instruction-text {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-top: -10px; /* Aproxima do foguete */
+            margin-bottom: 30px; /* Afasta do botão */
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.8s ease-out 0.5s; /* Delay de 0.5s para efeito cascata */
+        }
+
+        .rocket-section.reveal-active .instruction-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-jornada {
+            background-color: var(--netflix-red);
+            color: white;
+            text-decoration: none;
+            padding: 18px 45px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease, transform 0.8s ease-out 0.8s, opacity 0.8s ease-out 0.8s; /* Delay de 0.8s */
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+            position: relative;
+            z-index: 11;
+
+            /* Estado Inicial do Botão */
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        /* Botão aparece por último na cascata */
+        .rocket-section.reveal-active .btn-jornada {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-jornada:hover { transform: scale(1.05) !important; background-color: #b20710; }
+
+        /* --- MOBILE --- */
+        @media (max-width: 600px) {
+            .hero-section { padding: 60px 15px; min-height: auto; }
+            .animation-container { flex-direction: column; gap: 20px; }
+            .circle-frame { 
+                width: 140px; height: 140px; 
+                transform: none !important; animation: fadeInMobile 1s ease 0.5s forwards; 
+            }
+            @keyframes fadeInMobile {
+                0% { opacity: 0; transform: translateY(-20px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+            .text-reveal { position: static; text-align: center; white-space: normal; width: 100%; }
+            .sub-name { margin-top: 10px; }
+            .rocket-animation { width: 200px; height: 200px; }
+            .rocket-section { margin-top: 60px; }
+            .instruction-text { font-size: 1rem; padding: 0 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <div class="animation-container">
+            <div class="circle-frame">
+                <img src="https://images2.imgbox.com/31/9a/S7Gg4KSl_o.jpg" alt="Diandra">
+            </div>
+            <div class="text-reveal">
+                <div>
+                    <span id="typewriter"></span><span id="cursor" class="cursor"></span>
+                </div>
+                <span class="sub-name">Di carvalho Prof.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="rocket-section" id="rocket-reveal-section">
+        <div class="rocket-animation">
+            <dotlottie-player 
+                src="https://raw.githubusercontent.com/Dididoingles/Marketing/main/Japan%20rocket%20Lottie%20JSON%20animation.lottie" 
+                background="transparent" speed="1" loop autoplay>
+            </dotlottie-player>
+        </div>
+        
+        <p class="instruction-text">conheça nossa estrutura digital</p>
+
+        <a href="https://dididoingles.github.io/LanguageLab/Inprogress.html" class="btn-jornada">Iniciar Jornada</a>
+    </section>
+
+    <script>
+        // --- Animação de Digitação (Hero) ---
+        const text = "Education of the Future.";
+        const typewriterElement = document.getElementById('typewriter');
+        const cursor = document.getElementById('cursor');
+        let index = 0;
+
+        function type() {
+            if (index < text.length) {
+                typewriterElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(type, 100);
+            } else {
+                setTimeout(() => { cursor.style.display = "none"; }, 1600);
+            }
+        }
+        setTimeout(type, 800);
+
+        // --- Intersection Observer (Revelação ao Rolar) ---
+        const rocketSection = document.getElementById('rocket-reveal-section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Se a seção estiver visível na tela
+                if (entry.isIntersecting) {
+                    // Adiciona a classe que dispara as animações CSS
+                    rocketSection.classList.add('reveal-active');
+                    // Opcional: para de observar após a primeira revelação
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            // Configurações do Observer
+            root: null, // usa o viewport do navegador
+            threshold: 0.3 // Dispara quando 30% da seção estiver visível
+        });
+
+        // Começa a observar a seção do foguete
+        observer.observe(rocketSection);
+    </script>
+</body>
+</html>
