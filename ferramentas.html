@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossas Ferramentas - Diandra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --netflix-red: #E50914;
+            --bg-deep: #080808;
+            --sky-dark: #000c1f;
+            --text-gray: #b3b3b3;
+            --soft-white: #F5F5F5;
+            --card-bg: rgba(20, 20, 20, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-deep) 40%, var(--sky-dark) 70%, #000000 100%);
+            color: var(--soft-white);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Seções */
+        .section {
+            margin-bottom: 70px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-left: 4px solid var(--netflix-red);
+            padding-left: 20px;
+        }
+
+        .section-title .badge {
+            font-size: 0.8rem;
+            background: rgba(229, 9, 20, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: var(--netflix-red);
+        }
+
+        /* BANNER EM DESTAQUE ESTILO NETFLIX */
+        .featured-banner {
+            margin-bottom: 50px;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .banner-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .banner-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Botão "Saiba mais" no canto inferior esquerdo */
+        .banner-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--netflix-red);
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .banner-btn:hover {
+            background-color: #b20710;
+            transform: scale(1.05);
+        }
+
+        /* Grid de cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* Para tutores (2 cards lado a lado) */
+        .tutors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 400px));
+            gap: 30px;
+            justify-content: center;
+        }
+
+        /* Descrição/aviso abaixo dos tutores */
+        .tutor-note {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--netflix-red);
+        }
+
+        .tutor-note p {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* Card estilo Netflix - formato retrato 1080x1350 (proporção 4:5) */
+        .netflix-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .netflix-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        /* Imagem do card - formato retrato 4:5 (1080x1350) */
+        .card-image {
+            position: relative;
+            width: 100%;
+            padding-top: 125%; /* 4:5 = 5/4 = 125% */
+            overflow: hidden;
+        }
+
+        .card-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .netflix-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        /* Selo "Novo" - fácil de remover */
+        .new-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--netflix-red);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        /* Preço no card */
+        .price-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: #4CAF50;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .price-badge.paid {
+            color: #FFD700;
+        }
+
+        /* Conteúdo do card - TÍTULO NA PARTE SUPERIOR */
+        .card-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 15px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
+            z-index: 2;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0;
+            color: var(--soft-white);
+        }
+
+        /* Descrição oculta inicialmente - aparece no hover */
+        .card-hover-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%);
+            padding: 25px 15px 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 3;
+        }
+
+        .netflix-card:hover .card-hover-info {
+            transform: translateY(0);
+        }
+
+        .hover-description {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .hover-link {
+            color: var(--netflix-red);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* Para cards de tutor (imagem circular) */
+        .tutor-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .tutor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tutor-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid var(--netflix-red);
+        }
+
+        .tutor-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tutor-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .tutor-bio {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            padding: 0 15px;
+        }
+
+        .whatsapp-btn {
+            display: inline-block;
+            background-color: #25D366;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Rodapé */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+
+        .footer p {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            margin: 5px 0;
+        }
+
+        .footer .brand {
+            color: var(--soft-white);
+        }
+
+        /* Botão voltar - mesma guia */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--netflix-red);
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 15px;
+            }
+            .section-title {
+                font-size: 1.4rem;
+            }
+            .cards-grid {
+                gap: 15px;
+            }
+            .tutors-grid {
+                grid-template-columns: 1fr;
+            }
+            .tutor-image {
+                width: 100px;
+                height: 100px;
+            }
+            .card-title {
+                font-size: 0.9rem;
+            }
+            .banner-btn {
+                bottom: 10px;
+                left: 10px;
+                padding: 6px 15px;
+                font-size: 0.8rem;
+            }
+            .tutor-note p {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Link para voltar para página inicial - mesma guia -->
+        <a href="index.html" class="back-link">← Voltar para página inicial</a>
+
+        <!-- BANNER EM DESTAQUE ESTILO NETFLIX -->
+        <div class="featured-banner">
+            <div class="banner-image">
+                <img src="https://placehold.co/300x200/1a1a1a/E50914?text=Banner+em+Destaque" alt="Destaque">
+            </div>
+            <a href="#" class="banner-btn" target="_blank">Saiba mais →</a>
+        </div>
+
+        <!-- SEÇÃO 1: FERRAMENTAS GRATUITAS -->
+        <section class="section">
+            <h2 class="section-title">
+                🎁 Ferramentas Gratuitas
+                <span class="badge">sem custo</span>
+            </h2>
+            <div class="cards-grid">
+                <!-- Card Whiteboard -->
+                <a href="#" class="netflix-card" target="_blank">
+                    <div class="card-image">
+                        <img src="https://placehold.co/1080x1350/1a1a1a/E50914?text=Whiteboard" alt="Whiteboard">
+                        <div class="price-badge">Gratuito</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Whiteboard Interativo</div>
+                    </div>
+                    <div class="card-hover-info">
+                        <div class="hover-description">Quadro colaborativo para aulas dinâmicas e exercícios visuais. Perfeito para praticar vocabulário, criar mapas mentais e organizar ideias em tempo real.</div>
+                        <span class="hover-link">Experimentar →</span>
+                    </div>
+                </a>
+
+                <!-- Card Jogos -->
+                <a href="#" class="netflix-card" target="_blank">
+                    <div class="card-image">
+                        <img src="https://placehold.co/1080x1350/1a1a1a/E50914?text=Jogos" alt="Jogos">
+                        <div class="price-badge">Gratuito</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Jogos de Vocabulário</div>
+                    </div>
+                    <div class="card-hover-info">
+                        <div class="hover-description">Aprenda brincando com jogos interativos para todos os níveis. Flashcards, palavras cruzadas, quizzes e muito mais para fixar o conteúdo de forma divertida.</div>
+                        <span class="hover-link">Jogar agora →</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 2: BIBLIOTECA -->
+        <section class="section">
+            <h2 class="section-title">
+                📚 Biblioteca de Materiais
+                <span class="badge">acesso livre</span>
+            </h2>
+            <div class="cards-grid">
+                <a href="#" class="netflix-card" target="_blank">
+                    <div class="card-image">
+                        <img src="https://placehold.co/1080x1350/1a1a1a/E50914?text=Biblioteca" alt="Biblioteca">
+                        <div class="price-badge">Gratuito</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Materiais Didáticos</div>
+                    </div>
+                    <div class="card-hover-info">
+                        <div class="hover-description">Apostilas, exercícios PDF, áudios e videoaulas complementares. Conteúdo organizado por nível e tema. Baixe e estude no seu ritmo.</div>
+                        <span class="hover-link">Explorar →</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 3: CURSOS GRAVADOS EM DESTAQUE (4 CARDS) -->
+        <section class="section">
+            <h2 class="section-title">
+                🎬 Cursos Gravados
+                <span class="badge">destaque</span>
+            </h2>
+            <div class="cards-grid">
+                <!-- Curso 1 -->
+                <a href="#" class="netflix-card" target="_blank">
+                    <div class="card-image">
+                        <img src="https://placehold.co/1080x1350/1a1a1a/E50914?text=Inglês+Iniciante" alt="Inglês Iniciante">
+                        <div class="new-badge">NOVO</div>
+                        <div class="price-badge paid">R$ 97</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Inglês para Iniciantes</div>
+                    </div>
+                    <div class="card-hover-info">
+                        <div class="hover-description">Do zero à conversação básica. Método neurocientífico. 12 módulos, exercícios práticos e suporte exclusivo. Para quem nunca estudou inglês.</div>
+                        <span class="hover-link">Conhecer curso →</span>
+                    </div>
+                </a>
+
+                <!-- Curso 2 -->
+                <a href="#" class="netflix-card" target="_blank">
+                    <div class="card-image">
+                        <img src="https://placehold.co/1080x1350/1a1a1a/E50914?text=Conversação" alt="Conversação">
+                        <div class="price-badge paid">R$ 127</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Conversação com Nativo</div>
+                    </div>
+                    <div class="card-hover-info">
+                        <div class="hover-description">Pratique com professor nativo. Aulas gravadas com situações reais. Desenvolva fluência e confiança para falar inglês em qualquer situação.</div>
+                        <span class="hover-link">Conhecer curso →</span>
+                    </div>
+                </a>
+
+                <!-- Curso 3 -->
+                <a href="#" class="netflix-card" target="_blank">
+                    <div class="card-image">
+                        <img src="https://placehold.co/1080x1350/1a1a1a/E50914?text=Pronúncia" alt="Pronúncia">
+                        <div class="new-badge">NOVO</div>
+                        <div class="price-badge paid">R$ 67</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Pronúncia Perfeita</div>
+                    </div>
+                    <div class="card-hover-info">
+                        <div class="hover-description">Domine os sons do inglês com técnicas de neurolinguística. Curso focado em fonética, entonação e redução de sotaque.</div>
+                        <span class="hover-link">Conhecer curso →</span>
+                    </div>
+                </a>
+
+                <!-- Curso 4 -->
+                <a href="#" class="netflix-card" target="_blank">
+                    <div class="card-image">
+                        <img src="https://placehold.co/1080x1350/1a1a1a/E50914?text=Business" alt="Business English">
+                        <div class="price-badge paid">R$ 157</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Business English</div>
+                    </div>
+                    <div class="card-hover-info">
+                        <div class="hover-description">Inglês para reuniões, apresentações e negociações. Vocabulário corporativo, e-mails, entrevistas e networking.</div>
+                        <span class="hover-link">Conhecer curso →</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 4: FALE COM O TUTOR (2 CARDS) -->
+        <section class="section">
+            <h2 class="section-title">
+                💬 Fale com o Tutor
+                <span class="badge">atendimento personalizado</span>
+            </h2>
+            <div class="tutors-grid">
+                <!-- Card Diandra -->
+                <div class="tutor-card">
+                    <div class="tutor-image">
+                        <img src="https://placehold.co/200x200/1a1a1a/E50914?text=Diandra" alt="Diandra">
+                    </div>
+                    <div class="tutor-name">Diandra Carvalho</div>
+                    <div class="tutor-bio">Especialista em Neurolinguística. Metodologia personalizada para acelerar seu aprendizado.</div>
+                    <a href="https://wa.me/5511999999999?text=Olá%20Diandra!%20Gostaria%20de%20saber%20mais%20sobre%20as%20aulas" class="whatsapp-btn" target="_blank">Chamar no WhatsApp</a>
+                </div>
+
+                <!-- Card Daniel -->
+                <div class="tutor-card">
+                    <div class="tutor-image">
+                        <img src="https://placehold.co/200x200/1a1a1a/E50914?text=Daniel" alt="Daniel">
+                    </div>
+                    <div class="tutor-name">Daniel</div>
+                    <div class="tutor-bio">Professor Nativo. Aulas de conversação com foco em fluência e naturalidade.</div>
+                    <a href="https://wa.me/5511999999999?text=Olá%20Daniel!%20Gostaria%20de%20saber%20mais%20sobre%20as%20aulas" class="whatsapp-btn" target="_blank">Chamar no WhatsApp</a>
+                </div>
+            </div>
+
+            <!-- DESCRIÇÃO/AVISO ABAIXO DOS TUTORES -->
+            <div class="tutor-note">
+                <p>📢 *Atendimento de segunda a sexta, das 9h às 18h. Respondemos em até 24h úteis.*</p>
+                <p>🎓 *Primeira conversa é gratuita e sem compromisso!*</p>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Diandra Carvalho | <span class="brand">@dicarvalho.prof</span></p>
+        <p>Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>
