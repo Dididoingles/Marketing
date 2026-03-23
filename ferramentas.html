@@ -60,47 +60,6 @@
             color: var(--netflix-red);
         }
 
-        /* BANNER EM DESTAQUE ESTILO NETFLIX */
-        .featured-banner {
-            margin-bottom: 50px;
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .banner-image {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .banner-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Botão "Saiba mais" no canto inferior esquerdo */
-        .banner-btn {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background-color: var(--netflix-red);
-            color: white;
-            text-decoration: none;
-            padding: 10px 25px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        .banner-btn:hover {
-            background-color: #b20710;
-            transform: scale(1.05);
-        }
-
         /* Grid de cards */
         .cards-grid {
             display: grid;
@@ -114,22 +73,6 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 400px));
             gap: 30px;
             justify-content: center;
-        }
-
-        /* Descrição/aviso abaixo dos tutores */
-        .tutor-note {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            border-left: 3px solid var(--netflix-red);
-        }
-
-        .tutor-note p {
-            color: var(--text-gray);
-            font-size: 0.85rem;
-            line-height: 1.5;
         }
 
         /* Card estilo Netflix - formato retrato 1080x1350 (proporção 4:5) */
@@ -365,15 +308,6 @@
             .card-title {
                 font-size: 0.9rem;
             }
-            .banner-btn {
-                bottom: 10px;
-                left: 10px;
-                padding: 6px 15px;
-                font-size: 0.8rem;
-            }
-            .tutor-note p {
-                font-size: 0.75rem;
-            }
         }
     </style>
 </head>
@@ -382,14 +316,6 @@
     <div class="container">
         <!-- Link para voltar para página inicial - mesma guia -->
         <a href="index.html" class="back-link">← Voltar para página inicial</a>
-
-        <!-- BANNER EM DESTAQUE ESTILO NETFLIX -->
-        <div class="featured-banner">
-            <div class="banner-image">
-                <img src="https://placehold.co/300x200/1a1a1a/E50914?text=Banner+em+Destaque" alt="Destaque">
-            </div>
-            <a href="#" class="banner-btn" target="_blank">Saiba mais →</a>
-        </div>
 
         <!-- SEÇÃO 1: FERRAMENTAS GRATUITAS -->
         <section class="section">
@@ -550,12 +476,6 @@
                     <div class="tutor-bio">Professor Nativo. Aulas de conversação com foco em fluência e naturalidade.</div>
                     <a href="https://wa.me/5511999999999?text=Olá%20Daniel!%20Gostaria%20de%20saber%20mais%20sobre%20as%20aulas" class="whatsapp-btn" target="_blank">Chamar no WhatsApp</a>
                 </div>
-            </div>
-
-            <!-- DESCRIÇÃO/AVISO ABAIXO DOS TUTORES -->
-            <div class="tutor-note">
-                <p>📢 *Atendimento de segunda a sexta, das 9h às 18h. Respondemos em até 24h úteis.*</p>
-                <p>🎓 *Primeira conversa é gratuita e sem compromisso!*</p>
             </div>
         </section>
     </div>
